@@ -54,9 +54,9 @@ class LiveProtocolTestCase(unittest.TestCase):
                      '\xbb\xef\x00')
 
 
-    #def test_lineReveived(self):
-    #    self.protocol.dataReceived(self.data)
-    #    self.assertEqual(self.protocol.getSource().getID(), '21200')
+    def test_lineReveived(self):
+        self.protocol.dataReceived(self.data)
+        self.assertEqual(self.protocol.getSource().getID(), '21200')
 
 
     def tearDown(self):
