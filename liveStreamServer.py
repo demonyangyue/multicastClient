@@ -87,6 +87,7 @@ class LiveServer(protocol.ServerFactory):
 
     
     def connectionLost(self, reason):
+        self._clientNum = self._clientNum - 1
         log.msg("live source connection lost because %s" %(reason))
 
 def main():
