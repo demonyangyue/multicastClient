@@ -16,7 +16,7 @@ import fileinput
 class MulticastSource(object):
     """initialize the source with the ID and configure the video.conf file"""
 
-    conf_file_path = "/home/yy/programme/python/multicastClient/test/video.conf"
+    conf_file_path = "video.conf"
 
     def __init__(self, proto):
         self._proto = proto
