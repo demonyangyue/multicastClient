@@ -44,7 +44,7 @@ class MulticastSource(object):
             try:
                 self._listenPort = reactor.listenMulticast(self._destPort, self._sender, listenMultiple = True)
             except Exception, e:
-                log.msg("no multicast sever listening, " + e)
+                log.msg("no multicast sever listening, " + str(e))
 
     def getDestIPAndPort(self):
         """return the IP address and portof the muticast server"""
@@ -87,12 +87,16 @@ class MulticastSender(DatagramProtocol):
     def __init__(self, IP, Port):
         self._destIP = IP 
         self._destPort = Port
+        self._interface = '192.168.1.7'
+
+    def startProtocol(self):
+        self.transport.setOutgoingInterface(self._interface)
 
     def send(self, data):
         try:
             self.transport.write(data,(self._destIP, self._destPort))
         except Exception, e:
-            log.msg("can't send data to the server" + e)
+            log.msg("can't send data to the server" + str(e))
 
 def test():
     ID = "21200"
