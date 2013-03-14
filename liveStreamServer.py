@@ -22,6 +22,7 @@ class LiveProtocol(basic.LineReceiver, TimeoutMixin):
     """accept live stream data and parse it"""
     delimiter = '\x00\x00\x00\x01'
     #TODO the default MAX_LENGTH is 16384, enough?
+    MAX_LENGTH = 65530
 
     def __init__(self):
         self._source = MulticastSource(self)
@@ -36,10 +37,12 @@ class LiveProtocol(basic.LineReceiver, TimeoutMixin):
     def connectionMade(self):
         self.setTimeout(10)
         self.factory.addSource(self._source)
+
         print 'live stream connects from %s' % self.transport.getPeer()
 
     def lineReceived(self, line):
         #in case of "00 00 00 01 00 00 00 01"
+
         self.resetTimeout()
         if line:
             self._state.receiveLine(line)

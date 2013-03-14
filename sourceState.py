@@ -22,10 +22,12 @@ class IDReceivedState(object):
     """has received the ID string"""
     def __init__(self, proto):
        self._proto = proto 
+       self._delimiter = '\x00\x00\x00\x01'
+       #self._testFile = open("sample.264","wb")
 
     def receiveLine(self, line):
-        self._delimiter = '\x00\x00\x00\x01'
         line = "".join([self._delimiter, line])
+        #self._testFile.write(line)
         self._proto.getSource().update(line)
 
         

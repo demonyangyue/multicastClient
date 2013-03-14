@@ -87,14 +87,16 @@ class MulticastSender(DatagramProtocol):
     def __init__(self, IP, Port):
         self._destIP = IP 
         self._destPort = Port
-        self._interface = '192.168.1.7'
+        self._interface = '192.168.0.111'
 
     def startProtocol(self):
         self.transport.setOutgoingInterface(self._interface)
 
     def send(self, data):
         try:
-            self.transport.write(data,(self._destIP, self._destPort))
+            dataList = [data[i:i+1200] for i in range(0,len(data),1200)]
+            for piece in dataList: 
+                self.transport.write(piece,(self._destIP, self._destPort))
         except Exception, e:
             log.msg("can't send data to the server" + str(e))
 
